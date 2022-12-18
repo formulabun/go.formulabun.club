@@ -4,3 +4,7 @@
 [submodule "translator"]
 	path = translator
 	url = ./translator/
+[submodule "srb2kart/"]
+	url = git@github.com:formulabun/srb2kart.git
+[submodule "translator/"]
+	url = git@github.com:formulabun/translator.git
