@@ -12,7 +12,7 @@ type templateData struct {
 
 const htmlPage = `<html>
 <head>
-<meta name="go-import" content="go.formulabun.club{{.Path}} git https://github.com/formulabun/go.formulabun.club{{.Path}}">
+<meta name="go-import" content="go.formulabun.club{{.Path}} git https://github.com/formulabun/go.formulabun.club">
 </head>
 <body>
 <a href="https://godoc.formulabun.club{{.Path}}">Redirecting to documentation.</a>
