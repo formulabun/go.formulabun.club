@@ -1,0 +1,310 @@
+openapi: 3.0.0
+info:
+  title: GoBun Replay File Info
+  version: 0.0.1
+servers:
+- url: storage.info
+paths:
+  /:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ReplayInfo'
+                type: array
+          description: All replays returned
+        "206":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ReplayInfo'
+                type: array
+          description: Too many replays to return at once
+          headers:
+            Content-Range:
+              description: Range of the items returned
+              explode: false
+              style: simple
+      summary: Search replay info
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReplayInfo'
+      responses:
+        "201":
+          description: Replay created
+        "409":
+          description: Replay with this checksum already exists
+      summary: Add a new replay info
+components:
+  schemas:
+    ReplayInfo:
+      example:
+        FileInfo:
+          FileCount: 4
+          BestLapTime: 1
+          GameMap: 7
+          DemoFlags: 3
+          Cvars:
+          - CVarId: 7
+            Value: Value
+          - CVarId: 7
+            Value: Value
+          Title: Title
+          Time: 1
+          GameType: 2
+          SubVersion: 5
+          Wads:
+          - FileName: FileName
+            WadMd5:
+            - 7
+            - 7
+            - 7
+            - 7
+            - 7
+          - FileName: FileName
+            WadMd5:
+            - 7
+            - 7
+            - 7
+            - 7
+            - 7
+          Play: Play
+          MapMd5:
+          - 9
+          - 9
+          - 9
+          - 9
+          - 9
+          Version: 1
+          Checksum:
+          - 2
+          - 2
+          - 2
+          - 2
+          - 2
+          Seed: 1
+          DemoVersion: 5
+          CVarCount: 6
+          DemoHeader: DemoHeader
+          Players:
+          - Speed: 5
+            Score: 4
+            Spectate: 1
+            Color: Color
+            weight: 9
+            Skin: Skin
+            Name: Name
+          - Speed: 5
+            Score: 4
+            Spectate: 1
+            Color: Color
+            weight: 9
+            Skin: Skin
+            Name: Name
+        MetaInfo:
+          Creator: 0
+          Date: 6
+      properties:
+        MetaInfo:
+          $ref: '#/components/schemas/MetaInfo'
+        FileInfo:
+          $ref: '#/components/schemas/FileInfo'
+      type: object
+    MetaInfo:
+      example:
+        Creator: 0
+        Date: 6
+      properties:
+        Creator:
+          description: discord id
+          type: integer
+        Date:
+          description: unix time stamp
+          type: integer
+      type: object
+    FileInfo:
+      example:
+        FileCount: 4
+        BestLapTime: 1
+        GameMap: 7
+        DemoFlags: 3
+        Cvars:
+        - CVarId: 7
+          Value: Value
+        - CVarId: 7
+          Value: Value
+        Title: Title
+        Time: 1
+        GameType: 2
+        SubVersion: 5
+        Wads:
+        - FileName: FileName
+          WadMd5:
+          - 7
+          - 7
+          - 7
+          - 7
+          - 7
+        - FileName: FileName
+          WadMd5:
+          - 7
+          - 7
+          - 7
+          - 7
+          - 7
+        Play: Play
+        MapMd5:
+        - 9
+        - 9
+        - 9
+        - 9
+        - 9
+        Version: 1
+        Checksum:
+        - 2
+        - 2
+        - 2
+        - 2
+        - 2
+        Seed: 1
+        DemoVersion: 5
+        CVarCount: 6
+        DemoHeader: DemoHeader
+        Players:
+        - Speed: 5
+          Score: 4
+          Spectate: 1
+          Color: Color
+          weight: 9
+          Skin: Skin
+          Name: Name
+        - Speed: 5
+          Score: 4
+          Spectate: 1
+          Color: Color
+          weight: 9
+          Skin: Skin
+          Name: Name
+      properties:
+        DemoHeader:
+          type: string
+        Version:
+          type: integer
+        SubVersion:
+          type: integer
+        DemoVersion:
+          type: integer
+        Title:
+          type: string
+        Checksum:
+          items:
+            type: integer
+          maxItems: 16
+          minItems: 16
+          type: array
+        Play:
+          type: string
+        GameMap:
+          type: integer
+        MapMd5:
+          items:
+            type: integer
+          maxItems: 16
+          minItems: 16
+          type: array
+        DemoFlags:
+          type: integer
+        GameType:
+          type: integer
+        FileCount:
+          type: integer
+        Wads:
+          items:
+            $ref: '#/components/schemas/WadEntry'
+          type: array
+        Time:
+          description: Total time in nanoseconds
+          type: integer
+        BestLapTime:
+          description: Best lap time in nanoseconds
+          type: integer
+        Seed:
+          type: integer
+        CVarCount:
+          type: integer
+        Cvars:
+          items:
+            $ref: '#/components/schemas/CVarEntry'
+          type: array
+        Players:
+          items:
+            $ref: '#/components/schemas/PlayerEntry'
+          type: array
+      type: object
+    CheckSum:
+      items:
+        type: integer
+      maxItems: 16
+      minItems: 16
+      type: array
+    WadEntry:
+      example:
+        FileName: FileName
+        WadMd5:
+        - 7
+        - 7
+        - 7
+        - 7
+        - 7
+      properties:
+        FileName:
+          type: string
+        WadMd5:
+          items:
+            type: integer
+          maxItems: 16
+          minItems: 16
+          type: array
+      type: object
+    CVarEntry:
+      example:
+        CVarId: 7
+        Value: Value
+      properties:
+        CVarId:
+          type: integer
+        Value:
+          type: string
+      type: object
+    PlayerEntry:
+      example:
+        Speed: 5
+        Score: 4
+        Spectate: 1
+        Color: Color
+        weight: 9
+        Skin: Skin
+        Name: Name
+      properties:
+        Spectate:
+          type: integer
+        Name:
+          type: string
+        Skin:
+          type: string
+        Color:
+          type: string
+        Score:
+          type: integer
+        Speed:
+          type: integer
+        weight:
+          type: integer
+      type: object
