@@ -2,3 +2,9 @@
 	url = git@github.com:formulabun/srb2kart.git
 [submodule "translator/"]
 	url = git@github.com:formulabun/translator.git
+[submodule "srb2kart"]
+	path = srb2kart
+	url = git@github.com:formulabun/srb2kart.git
+[submodule "goimport"]
+	path = goimport
+	url = git@github.com:formulabun/goimport.git
