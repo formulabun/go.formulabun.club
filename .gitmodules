@@ -8,3 +8,15 @@
 [submodule "goimport"]
 	path = goimport
 	url = git@github.com:formulabun/goimport.git
+[submodule "translator"]
+	path = translator
+	url = git@github.com:formulabun/translator.git
+[submodule "replays"]
+	path = replays
+	url = git@github.com:formulabun/replays.git
+[submodule "discord"]
+	path = discord
+	url = git@github.com:formulabun/discord.git
+[submodule "functional"]
+	path = functional
+	url = git@github.com:formulabun/functional.git
