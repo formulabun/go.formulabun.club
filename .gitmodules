@@ -1,0 +1,6 @@
+[submodule "srb2kart"]
+	path = srb2kart
+	url = ./srb2kart/
+[submodule "translator"]
+	path = translator
+	url = ./translator/
