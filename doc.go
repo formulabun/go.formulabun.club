@@ -1,2 +1,2 @@
-// Welcome to the main documentation page fo go.formulabun.club
+// Welcome to the main documentation page for go.formulabun.club
 package main
