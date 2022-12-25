@@ -1,0 +1,37 @@
+version: "3.7"
+services:
+
+  discord:
+    image: formulabun/discord:0.1.1
+    build:
+      dockerfile: Dockerfile.discord
+    environment:
+      TOKEN: "${DISCORD_TOKEN}"
+      APPLICATIONID: "${DISCORD_APPLICATION}"
+      TESTGUILD: "${DISCORD_TESTGUILD}"
+
+  translator:
+    image: formulabun/translator:0.1.0
+    build:
+      dockerfile: Dockerfile.translator
+    ports:
+      - "5092:5092/tcp"
+    environment:
+      TARGET: "${IP}:${SRB2KART_MAIN_PORT}"
+
+  replays.store:
+    image: formulabun/replaystore:0.0.0
+    build:
+      dockerfile: Dockerfile.replays.store
+    volumes:
+      - replays:/data
+
+  replays.download:
+    image: formulabun/replaydownload:0.0.0
+    build:
+      dockerfile: Dockerfile.replays.download
+    volumes:
+      - replays:/data
+    
+volumes:
+  replays:
