@@ -12,7 +12,7 @@ The deployment on the VPS is done using [docker](https://www.docker.com/) and [d
 
 ## Setting up a development environment
 
-First of, **DO NOT CLONE THIS REPOSITORY.** This is only a collection of the packages and only serves the godoc site on [godoc.formulabun.club]() and contains build and release docker compose files. It is not meant for development.
+First of, **THIS IS NOT THE REPOSITORY TO DEVELOP IN.** This is only a collection of the packages, mostly serves the godoc site on [godoc.formulabun.club]() and contains build and release docker compose files. It is not really meant for development.
 
 Instead, clone the packages (the submodules in this repository) you want to work on in `GOPATH/go/src/go.formulabun.club/`. 
 
@@ -24,4 +24,19 @@ Because Go imports can't form cycles, you can complete the pull requests for eac
 
 ### Running the development environment
 
-See the docker files ig. Still working on that tbh.
+You can either always build and run services in docker or setup the environment yourself.
+
+##### Running in docker
+
+Update the context paths in the [docker-compose](https://github.com/formulabun/go.formulabun.club/blob/master/docker-compose.yml) file in this repository, then just `docker compose build` and `up` to build and run a service.
+
+##### Setting up the environment
+
+This can be service dependent. See the docker and docker compose files as reference. Setting up your environment consists of 
+
+* exporting environment variables
+* setting up static hostname redirects
+* creating folders
+
+Each is OS dependent.
+
