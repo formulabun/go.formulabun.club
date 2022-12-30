@@ -4,7 +4,8 @@ services:
   discord:
     image: formulabun/discord:0.1.1
     build:
-      dockerfile: Dockerfile.discord
+      context: ./discord
+      dockerfile: Dockerfile
     environment:
       TOKEN: "${DISCORD_TOKEN}"
       APPLICATIONID: "${DISCORD_APPLICATION}"
@@ -13,7 +14,8 @@ services:
   translator:
     image: formulabun/translator:0.1.0
     build:
-      dockerfile: Dockerfile.translator
+      context: ./translator
+      dockerfile: Dockerfile
     ports:
       - "5092:5092/tcp"
     environment:
@@ -22,14 +24,16 @@ services:
   replays.store:
     image: formulabun/replaystore:0.0.0
     build:
-      dockerfile: Dockerfile.replays.store
+      context: ./replays/store
+      dockerfile: Dockerfile
     volumes:
       - replays:/data
 
   replays.download:
     image: formulabun/replaydownload:0.0.0
     build:
-      dockerfile: Dockerfile.replays.download
+      context: ./replays/download
+      dockerfile: Dockerfile
     volumes:
       - replays:/data
     
