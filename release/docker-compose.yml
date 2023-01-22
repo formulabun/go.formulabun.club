@@ -1,0 +1,20 @@
+version: "3.7"
+services:
+
+  discord:
+    image: formulabun/discord:0.1.2
+    container_name: discord
+    restart: unless-stopped
+    environment:
+      TOKEN: "${DISCORD_TOKEN}"
+      APPLICATIONID: "${DISCORD_APPLICATION}"
+      TESTGUILD: "${DISCORD_TESTGUILD}"
+
+  translator:
+    image: formulabun/translator:0.1.0
+    container_name: translator
+    restart: unless-stopped
+    ports:
+      - "5092:5092/tcp"
+    environment:
+      TARGET: "${IP}:${SRB2KART_MAIN_PORT}"
