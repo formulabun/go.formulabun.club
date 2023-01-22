@@ -2,7 +2,9 @@ version: "3.7"
 services:
 
   discord:
-    image: formulabun/discord:0.1.1
+    image: formulabun/discord:0.1.2
+    container_name: discord
+    restart: unless-stopped
     build:
       context: ./discord
       dockerfile: Dockerfile
@@ -13,6 +15,8 @@ services:
 
   translator:
     image: formulabun/translator:0.1.0
+    container_name: translator
+    restart: unless-stopped
     build:
       context: ./translator
       dockerfile: Dockerfile
@@ -23,6 +27,7 @@ services:
 
   replays.store:
     image: formulabun/replaystore:0.0.0
+    container_name: replaystore
     build:
       context: ./replays/store
       dockerfile: Dockerfile
@@ -31,11 +36,23 @@ services:
 
   replays.download:
     image: formulabun/replaydownload:0.0.0
+    container_name: replaydownload
     build:
       context: ./replays/download
       dockerfile: Dockerfile
     volumes:
       - replays:/data
+
+  replays.db:
+    image: mariadb:10.5
+    container_name: replaydb
+    ports:
+      - "3306:3306/tcp"
+    environment:
+      MARIADB_DATABASE: replays
+      MARIADB_ROOT_PASSWORD: pass
+    volumes:
+      - ./databases/replays/test_init.sql:/docker-entrypoint-initdb.d/init.sql
     
 volumes:
   replays:
