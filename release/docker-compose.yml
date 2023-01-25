@@ -1,10 +1,49 @@
 version: "3.7"
 services:
 
+  main:
+    image: formulabun/srb2kart:1.6.0
+    container_name: srb2kart
+    restart: unless-stopped
+    build:
+      dockerfile: Dockerfile.srb2kart
+    ports:
+      - "${SRB2KART_MAIN_PORT}:${SRB2KART_MAIN_PORT}/udp"
+    command: bonuschars.kart -port ${SRB2KART_MAIN_PORT}
+    stdin_open: true
+    tty: true
+    volumes:
+      - type: bind
+        source: "${LUAFILESOURCE}"
+        target: "/luafiles"
+      - type: bind
+        source: "${CONFIGSOURCE}"
+        target: "/configs"
+      - type: volume
+        source: addons
+        target: "/addons"
+      - type: bind
+        source: "${ADDONSOURCE}"
+        target: "/repo"
+
+  addons:
+    image: bash
+    container_name: manage_addons
+    volumes:
+      - type: volume
+        source: addons
+        target: "/addonsmain"
+      - type: bind
+        source: "${ADDONSOURCE}"
+        target: "/repo"
+
   discord:
     image: formulabun/discord:0.1.2
     container_name: discord
     restart: unless-stopped
+    build:
+      context: ./discord
+      dockerfile: Dockerfile
     environment:
       TOKEN: "${DISCORD_TOKEN}"
       APPLICATIONID: "${DISCORD_APPLICATION}"
@@ -14,7 +53,44 @@ services:
     image: formulabun/translator:0.1.0
     container_name: translator
     restart: unless-stopped
+    build:
+      context: ./translator
+      dockerfile: Dockerfile
     ports:
       - "5092:5092/tcp"
     environment:
       TARGET: "${IP}:${SRB2KART_MAIN_PORT}"
+
+  replays.store:
+    image: formulabun/replaystore:0.0.0
+    container_name: replaystore
+    build:
+      context: ./replays/store
+      dockerfile: Dockerfile
+    volumes:
+      - replays:/data
+
+  replays.download:
+    image: formulabun/replaydownload:0.0.0
+    container_name: replaydownload
+    build:
+      context: ./replays/download
+      dockerfile: Dockerfile
+    volumes:
+      - replays:/data
+
+  replays.db:
+    image: mariadb:10.5
+    container_name: replaydb
+    ports:
+      - "3306:3306/tcp"
+    environment:
+      MARIADB_DATABASE: replays
+      MARIADB_ROOT_PASSWORD: pass
+    volumes:
+      - ./databases/replays/test_init.sql:/docker-entrypoint-initdb.d/init.sql
+    
+volumes:
+  replays:
+  addons:
+

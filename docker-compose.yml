@@ -1,6 +1,42 @@
 version: "3.7"
 services:
 
+  main:
+    image: formulabun/srb2kart:1.6.0
+    container_name: srb2kart
+    restart: unless-stopped
+    build:
+      dockerfile: Dockerfile.srb2kart
+    ports:
+      - "${SRB2KART_MAIN_PORT}:${SRB2KART_MAIN_PORT}/udp"
+    command: bonuschars.kart -port ${SRB2KART_MAIN_PORT}
+    stdin_open: true
+    tty: true
+    volumes:
+      - type: bind
+        source: "${LUAFILESOURCE}"
+        target: "/luafiles"
+      - type: bind
+        source: "${CONFIGSOURCE}"
+        target: "/configs"
+      - type: volume
+        source: addons
+        target: "/addons"
+      - type: bind
+        source: "${ADDONSOURCE}"
+        target: "/repo"
+
+  addons:
+    image: bash
+    container_name: manage_addons
+    volumes:
+      - type: volume
+        source: addons
+        target: "/addonsmain"
+      - type: bind
+        source: "${ADDONSOURCE}"
+        target: "/repo"
+
   discord:
     image: formulabun/discord:0.1.2
     container_name: discord
@@ -56,3 +92,5 @@ services:
     
 volumes:
   replays:
+  addons:
+
