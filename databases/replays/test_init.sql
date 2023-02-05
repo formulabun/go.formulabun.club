@@ -8,12 +8,13 @@ CREATE TABLE IF NOT EXISTS replays (
   PlayerSkin CHAR(16),
   PlayerColor CHAR(16),
   Speed TINYINT UNSIGNED,
-  Weight TINYINT UNSIGNED
+  Weight TINYINT UNSIGNED,
+  UNIQUE (Time, BestLap, PlayerName)
 );
 
 CREATE TABLE IF NOT EXISTS replayfiles (
   ReplayID INT REFERENCES replays(ReplayID),
   FileName VARCHAR(512),
-  FileCheckSum CHAR(16),
-  INDEX (ReplayID, FileName)
+  FileCheckSum char(32),
+  UNIQUE (ReplayID, FileName)
 );

@@ -61,21 +61,21 @@ services:
     environment:
       TARGET: "${IP}:${SRB2KART_MAIN_PORT}"
 
-  replays.store:
+  replays.ingest:
     image: formulabun/replaystore:0.0.0
-    container_name: replaystore
+    container_name: replaysingest
     build:
-      context: ./replays/store
-      dockerfile: Dockerfile
+      context: ./replays
+      dockerfile: Dockerfile.ingest
     volumes:
       - replays:/data
 
-  replays.download:
-    image: formulabun/replaydownload:0.0.0
-    container_name: replaydownload
+  replays.staff:
+    image: formulabun/replaystaff:0.0.0
+    container_name: replaysstaff
     build:
-      context: ./replays/download
-      dockerfile: Dockerfile
+      context: ./replays
+      dockerfile: Dockerfile.staff
     volumes:
       - replays:/data
 

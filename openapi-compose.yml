@@ -8,18 +8,18 @@ services:
     ports:
       - 80:8080
     volumes:
-      - /home/Fl_GUI/go/src/go.formulabun.club/replays/info:/openapi
+      - /home/Fl_GUI/go/src/go.formulabun.club/replays/staff:/openapi
     environment:
       SWAGGER_JSON: /openapi/api.yml
 
   generate-server:
     image: openapitools/openapi-generator-cli
     volumes:
-      - /home/Fl_GUI/go/src/go.formulabun.club/replays/info:/local
+      - /home/Fl_GUI/go/src/go.formulabun.club/replays/staff:/local
     command: generate -i /local/api.yml -g go-server -o /local/server
 
   generate-client:
     image: openapitools/openapi-generator-cli
     volumes:
-      - /home/Fl_GUI/go/src/go.formulabun.club/replays/info:/local
+      - /home/Fl_GUI/go/src/go.formulabun.club/replays/staff:/local
     command: generate -i /local/api.yml -g go -o /local/client --additional-properties=\"isGoSubmodule=true\"
