@@ -64,6 +64,8 @@ services:
   replays.ingest:
     image: formulabun/replaystore:0.0.0
     container_name: replaysingest
+    ports:
+      - "8080:8080/tcp"
     build:
       context: ./replays
       dockerfile: Dockerfile.ingest

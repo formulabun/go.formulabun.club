@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS replays (
   PlayerColor CHAR(16),
   Speed TINYINT UNSIGNED,
   Weight TINYINT UNSIGNED,
-  UNIQUE (Time, BestLap, PlayerName)
+  UNIQUE (Time, BestLap, PlayerName, GameMap)
 );
 
 CREATE TABLE IF NOT EXISTS replayfiles (
