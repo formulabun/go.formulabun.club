@@ -15,7 +15,7 @@ services:
   generate-server:
     image: openapitools/openapi-generator-cli
     volumes:
-      - /home/Fl_GUI/go/src/go.formulabun.club/replays/staff:/local
+      - /home/Fl_GUI/go/src/go.formulabun.club/replays/ingest:/local
     command: generate -i /local/api.yml -g go-server -o /local/server
 
   generate-client:

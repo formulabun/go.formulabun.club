@@ -38,12 +38,13 @@ services:
         target: "/repo"
 
   discord:
-    image: formulabun/discord:0.1.2
+    image: formulabun/discord:0.2.0
     container_name: discord
     restart: unless-stopped
     build:
       context: ./discord
       dockerfile: Dockerfile
+    env_file: .env
     environment:
       TOKEN: "${DISCORD_TOKEN}"
       APPLICATIONID: "${DISCORD_APPLICATION}"
@@ -61,8 +62,8 @@ services:
     environment:
       TARGET: "${IP}:${SRB2KART_MAIN_PORT}"
 
-  replays.ingest:
-    image: formulabun/replaystore:0.0.0
+  ingest.replays:
+    image: formulabun/replaystore:0.1.0
     container_name: replaysingest
     ports:
       - "8080:8080/tcp"
@@ -71,9 +72,10 @@ services:
       dockerfile: Dockerfile.ingest
     volumes:
       - replays:/data
+    env_file: .env
 
   replays.staff:
-    image: formulabun/replaystaff:0.0.0
+    image: formulabun/replaystaff:0.1.0
     container_name: replaysstaff
     build:
       context: ./replays
@@ -81,14 +83,14 @@ services:
     volumes:
       - replays:/data
 
-  replays.db:
+  replay.db:
     image: mariadb:10.5
     container_name: replaydb
     ports:
       - "3306:3306/tcp"
     environment:
       MARIADB_DATABASE: replays
-      MARIADB_ROOT_PASSWORD: pass
+    env_file: .env
     volumes:
       - ./databases/replays/test_init.sql:/docker-entrypoint-initdb.d/init.sql
     
