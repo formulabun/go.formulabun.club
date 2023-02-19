@@ -38,7 +38,7 @@ services:
         target: "/repo"
 
   discord:
-    image: formulabun/discord:0.1.2
+    image: formulabun/discord:0.2.0
     container_name: discord
     restart: unless-stopped
     build:
@@ -61,25 +61,27 @@ services:
     environment:
       TARGET: "${IP}:${SRB2KART_MAIN_PORT}"
 
-  replays.store:
-    image: formulabun/replaystore:0.0.0
-    container_name: replaystore
+  ingest.replays:
+    image: formulabun/replaystore:0.1.0
+    container_name: replaysingest
+    ports:
+      - "8080:8080/tcp"
     build:
-      context: ./replays/store
-      dockerfile: Dockerfile
+      context: ./replays
+      dockerfile: Dockerfile.ingest
     volumes:
       - replays:/data
 
-  replays.download:
-    image: formulabun/replaydownload:0.0.0
-    container_name: replaydownload
+  replays.staff:
+    image: formulabun/replaystaff:0.1.0
+    container_name: replaysstaff
     build:
-      context: ./replays/download
-      dockerfile: Dockerfile
+      context: ./replays
+      dockerfile: Dockerfile.staff
     volumes:
       - replays:/data
 
-  replays.db:
+  replay.db:
     image: mariadb:10.5
     container_name: replaydb
     ports:
