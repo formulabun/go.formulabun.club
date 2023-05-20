@@ -20,3 +20,6 @@
 [submodule "functional"]
 	path = functional
 	url = git@github.com:formulabun/functional.git
+[submodule "site"]
+	path = site
+	url = https://github.com/formulabun/site
