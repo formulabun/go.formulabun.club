@@ -93,6 +93,15 @@ services:
     env_file: .env
     volumes:
       - ./databases/replays/test_init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  site:
+    image: formulabun/site:0.1.0
+    container_name: site
+    ports:
+      - "8080:8080/tcp"
+    build:
+      context: ./site
+      dockerfile: Dockerfile
     
 volumes:
   replays:
