@@ -51,7 +51,7 @@ services:
       TESTGUILD: "${DISCORD_TESTGUILD}"
 
   translator:
-    image: formulabun/translator:0.1.0
+    image: formulabun/translator:1.0.0
     container_name: translator
     restart: unless-stopped
     build:
@@ -95,7 +95,7 @@ services:
       - ./databases/replays/test_init.sql:/docker-entrypoint-initdb.d/init.sql
 
   site:
-    image: formulabun/site:0.1.0
+    image: formulabun/site:1.0.0
     container_name: site
     ports:
       - "8080:8080/tcp"
