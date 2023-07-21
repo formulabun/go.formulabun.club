@@ -38,7 +38,7 @@ services:
         target: "/repo"
 
   discord:
-    image: formulabun/discord:0.2.0
+    image: formulabun/discord:1.0.0
     container_name: discord
     restart: unless-stopped
     build:
