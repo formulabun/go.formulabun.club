@@ -23,3 +23,6 @@
 [submodule "site"]
 	path = site
 	url = https://github.com/formulabun/site
+[submodule "proxy"]
+	path = proxy
+	url = git@github.com:formulabun/proxy.git

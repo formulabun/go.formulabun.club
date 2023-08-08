@@ -26,6 +26,17 @@ services:
         source: "${ADDONSOURCE}"
         target: "/repo"
 
+  proxy:
+    image: formulabun/proxy:1.0.0
+    container_name: proxy
+    restart: unless-stopped
+    build:
+      context: ./proxy
+      dockerfile: Dockerfile
+    command: -kart main:5029 -kartProxy :5030 -msProxy 127.0.0.1:5080
+    ports:
+      - "5030:5030/udp"
+
   addons:
     image: bash
     container_name: manage_addons
