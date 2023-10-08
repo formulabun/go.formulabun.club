@@ -26,3 +26,6 @@
 [submodule "proxy"]
 	path = proxy
 	url = git@github.com:formulabun/proxy.git
+[submodule "masterserver"]
+	path = masterserver
+	url = http://github.com/formulabun/masterserver
